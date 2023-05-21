@@ -1,9 +1,21 @@
 name: PR Workflow
 
-on: push
+on: pull_request
 
 jobs:
   UnitTests:
     runs-on: ubuntu-22.04
     steps:
-      - run: echo Hello world
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Initialize node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Unit tests
+        run: npm run test
