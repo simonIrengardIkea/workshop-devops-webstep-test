@@ -54,3 +54,26 @@ jobs:
 
       - name: Run Unit tests
         run: npm run build
+
+      - name: Upload build
+        uses: actions/upload-pages-artifact@v1
+        with:
+          name: ${{github.base_ref}}
+          path: "./build"
+
+  Deploy:
+    runs-on: ubuntu-22.04
+    needs: Build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: "github-pages"
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+        with:
+          preview: true
+          artifact_name: ${{github.base_ref}}
