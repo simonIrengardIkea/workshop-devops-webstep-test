@@ -1,0 +1,13 @@
+
+name: "Unit tests"
+
+on: push
+
+jobs: 
+  update_pr:
+    runs-on: ubuntu-20.04
+    steps: 
+      - name: "fisk"
+        shell: bash
+        id: test
+        run: echo hello world
